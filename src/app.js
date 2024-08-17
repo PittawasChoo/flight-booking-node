@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import airportRoutes from "./routes/airportRoutes.js";
+import flightRoutes from "./routes/flightRoutes.js";
 // import errorMiddleware from "./middlewares/errorMiddleware.js";
 
 const app = express();
@@ -17,7 +18,8 @@ app.use(morgan("dev")); // use morgan("dev") to color the status console.
 
 // Routes
 // app.use("/api/user", userRoutes);
-app.use("/airports", airportRoutes);
+app.use("/api/airports", airportRoutes);
+app.use("/api/flights", flightRoutes);
 
 // Error handling middleware
 // app.use(errorMiddleware);
