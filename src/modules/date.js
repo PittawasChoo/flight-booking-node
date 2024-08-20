@@ -1,8 +1,9 @@
 import moment from "moment";
 
-function combineDateTime(date, time) {
-    return moment(date + " " + time);
-}
+export const combineDateTime = (date, time) => {
+    const formattedDate = formatToDate(date);
+    return moment(formattedDate + " " + time);
+};
 
 export const formatToDate = (dateTime) => {
     return moment(dateTime).format("YYYY-MM-DD");
@@ -14,10 +15,7 @@ export const addDays = (date, days) => {
     return formatToDate(result);
 };
 
-export const getTimeDiff = (firstDate, firstTime, secondDate, secondTime) => {
-    const firstDateTime = combineDateTime(firstDate, firstTime);
-    const secondDateTime = combineDateTime(secondDate, secondTime);
-
+export const getTimeDiff = (firstDateTime, secondDateTime) => {
     const duration = moment.duration(secondDateTime.diff(firstDateTime));
     const minutes = duration.asMinutes();
     return minutes;

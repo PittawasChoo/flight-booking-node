@@ -1,4 +1,5 @@
 export const PORT = process.env.PORT || 3001;
+
 export const POOL_CONFIG = {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
@@ -7,4 +8,4 @@ export const POOL_CONFIG = {
     database: process.env.DATABASE_NAME,
 };
 
-// export const JWT_SECRET = process.env.JWT_SECRET;
+export const SECRET_KEY = process.env.JWT_SECRET;

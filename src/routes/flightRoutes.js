@@ -1,9 +1,10 @@
 import express from "express";
-import { searchFlights } from "../controllers/flightController.js";
+
+import { addFlight, searchFlights } from "#controllers/flight/controllers";
 
 const router = express.Router();
 
-// Route for user registration
+router.post("/add-flight", addFlight);
 router.get("/search", searchFlights);
 
 export default router;

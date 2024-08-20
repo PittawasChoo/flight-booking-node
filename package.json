@@ -12,13 +12,27 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "bcrypt": "^5.1.1",
         "cors": "^2.8.5",
         "express": "^4.19.2",
+        "helmet": "^7.1.0",
+        "jsonwebtoken": "^9.0.2",
         "moment": "^2.30.1",
         "moment-timezone": "^0.5.45",
         "morgan": "^1.10.0",
         "nodemon": "^3.1.4",
         "pg": "^8.12.0",
-        "uuid": "^10.0.0"
+        "uuid": "^10.0.0",
+        "xss-clean": "^0.1.4"
+    },
+    "devDependencies": {
+        "webpack": "^5.93.0",
+        "webpack-cli": "^5.1.4"
+    },
+    "imports": {
+        "#config/*": "./src/config/*.js",
+        "#controllers/*": "./src/controllers/*.js",
+        "#modules/*": "./src/modules/*.js",
+        "#routes/*": "./src/routes/*.js"
     }
 }
