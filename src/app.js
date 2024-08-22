@@ -1,10 +1,12 @@
 import express from "express";
+
 import cors from "cors";
-import morgan from "morgan";
 import helmet from "helmet";
+import morgan from "morgan";
 import xss from "xss-clean";
 
 import airportRoutes from "#routes/airportRoutes";
+import bookingRoutes from "#routes/bookingRoutes";
 import flightRoutes from "#routes/flightRoutes";
 import userRoutes from "#routes/userRoutes";
 
@@ -33,9 +35,10 @@ app.use(morgan("dev"));
 // app.use(morgan(":method :url :status :res[content-length] - :response-time ms"));
 
 // Routes
-app.use("/api/user", userRoutes);
 app.use("/api/airports", airportRoutes);
+app.use("/api/booking", bookingRoutes);
 app.use("/api/flights", flightRoutes);
+app.use("/api/user", userRoutes);
 
 // Error handling middleware
 // app.use(errorMiddleware);

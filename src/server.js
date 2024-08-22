@@ -1,5 +1,5 @@
-import { PORT } from "#config/config";
 import connectDB from "#config/dbConfig";
+import { PORT } from "#config/config";
 
 import app from "./app.js";
 

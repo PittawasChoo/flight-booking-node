@@ -1,8 +1,9 @@
+import chalk from "chalk";
 import { v4 as uuid } from "uuid";
 
 import { pool } from "#config/dbConfig";
 
-// Add new flight (No UI for this function)
+// Add new flight (This function is created for making mock data only, No UI or requirement for this function)
 export async function addFlight(req, res) {
     const {
         originalAirportCode,
@@ -22,6 +23,7 @@ export async function addFlight(req, res) {
         );
         const originalAirport = originalAirportQueryResult.rows;
         if (!originalAirport) {
+            console.log(chalk.red(`Original airport not found`));
             return res.status(404).json({ message: "Original airport not found" });
         }
         const originalAirportId = originalAirport[0].id;
@@ -33,6 +35,7 @@ export async function addFlight(req, res) {
         );
         const destinationAirport = destinationAirportQueryResult.rows;
         if (!destinationAirport) {
+            console.log(chalk.red("Destination airport not found"));
             return res.status(404).json({ message: "Destination airport not found" });
         }
         const destinationAirportId = destinationAirport[0].id;
@@ -44,8 +47,8 @@ export async function addFlight(req, res) {
         );
         const airline = airlineQueryResult.rows;
         if (!destinationAirport) {
-            console.log("Error getting airline data: Airline not found");
-            return res.status(404).json({ message: "Internal server error" });
+            console.log(chalk.red("Airline not found"));
+            return res.status(404).json({ message: "Airline not found" });
         }
         const airlineId = airline[0].id;
 
@@ -62,7 +65,7 @@ export async function addFlight(req, res) {
         const flights = flightSearch.rows;
 
         if (flights.length > 0) {
-            console.log("Error adding flight: This flight is already exist");
+            console.log(chalk.red("This flight is already exist"));
             return res.status(409).json({ message: "This flight is already exist" });
         }
 
@@ -91,9 +94,10 @@ export async function addFlight(req, res) {
             ]
         );
 
+        console.log(chalk.magenta("Flight added successfully"));
         res.status(201).json({ message: "Flight added successfully" });
     } catch (err) {
-        console.error("Error adding flight data:", err.message);
+        console.log(chalk.red(`Error adding flight data: ${err.message}`));
         res.status(500).json({ message: "Internal Server error" });
     }
 }

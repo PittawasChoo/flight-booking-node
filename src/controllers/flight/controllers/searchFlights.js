@@ -1,8 +1,13 @@
-import { addDays, getTimeDiff, combineDateTime } from "#modules/date";
+import chalk from "chalk";
+
+import { addDays, combineDateTime, getTimeDiff } from "#modules/date";
 import { pool } from "#config/dbConfig";
 
 // API can find connecting flight up to 2 stops (3 flight) per route
 const STOPS_LIMIT_PER_ROUTES = 2;
+
+// API can find connecting flight within 1 day after departure date
+const EXTRA_DAYS_UNTIL_ARRIVE = 1;
 
 // Get data from id
 const getDataFromId = async (table, airportId) => {
@@ -117,11 +122,12 @@ export async function searchFlights(req, res) {
         const destinationAirportId = await getAirportIdByCode(destinationAirportCode);
 
         if (!originalAirportId || !destinationAirportId) {
+            console.log(chalk.red("Invalid airport codes"));
             return res.status(400).json({ message: "Invalid airport codes" });
         }
 
         // limit arrival date (must arrive destination by the next day)
-        const limitArrivalDate = addDays(departureDate, 1);
+        const limitArrivalDate = addDays(departureDate, EXTRA_DAYS_UNTIL_ARRIVE);
 
         // get related flights
         const relatedFlightsQuery = `
@@ -195,9 +201,10 @@ export async function searchFlights(req, res) {
 
         const filteredSearchResult = searchResult.flat().filter(Boolean);
 
+        console.log(chalk.magenta(`Search result is now sent. Please check the response data`));
         res.status(200).json(filteredSearchResult);
     } catch (err) {
-        console.error("Error getting flights search result:", err.message);
+        console.log(chalk.red(`Error getting flights search result: ${err.message}`));
         res.status(500).json({ message: "Internal Server error" });
     }
 }
