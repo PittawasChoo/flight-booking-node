@@ -70,7 +70,7 @@ All paths in this project
     /permission
         /admin-page [get] : Return permission for user. This project does not encrypt any role or permission in token. So, front-end code cannot define permission by itself.
     /user
-        /add-user [post] : Add user to database. This function is built for support dev process only (No front-end code call it).
+        /add-user [post] : Add user to database. This function is built for support dev process only (No front-end code call it). To create user, send post request to this path with body included { username, password, email, role }
         /login [post] : Return token which contain only userId.
 ```
 
