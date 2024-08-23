@@ -8,8 +8,10 @@ export async function addFlight(req, res) {
     const {
         originalAirportCode,
         destinationAirportCode,
-        departDT,
-        arrivalDT,
+        departureDate,
+        departureTime,
+        arrivalDate,
+        arrivalTime,
         airlineName,
         flightCode,
         price,
@@ -58,9 +60,19 @@ export async function addFlight(req, res) {
             WHERE "originalAirportId" = $1
             AND "destinationAirportId" = $2
             AND "flightCode" = $3
-            AND "departureDateTime" = $4
-            AND "arrivalDateTime" = $5`,
-            [originalAirportId, destinationAirportId, flightCode, departDT, arrivalDT]
+            AND "departureDate" = $4
+            AND "departureTime" = $5
+            AND "arrivalDate" = $6
+            AND "arrivalTime" = $7`,
+            [
+                originalAirportId,
+                destinationAirportId,
+                flightCode,
+                departureDate,
+                departureTime,
+                arrivalDate,
+                arrivalTime,
+            ]
         );
         const flights = flightSearch.rows;
 
@@ -74,23 +86,28 @@ export async function addFlight(req, res) {
                 id,
                 "originalAirportId",
                 "destinationAirportId",
-                "departureDateTime",
-                "arrivalDateTime",
                 "airlineId",
                 "flightCode",
                 "availableSeats",
-                "price"
+                "price",
+                "departureTime",
+                "arrivalTime",
+                "departureDate",
+                "arrivalDate"
             )
-            VALUES ($1, $2, $3, $4, $5, $6, $7, 100, $8)`,
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9 ,$10 ,$11)`,
             [
                 uuid(),
                 originalAirportId,
                 destinationAirportId,
-                departDT,
-                arrivalDT,
                 airlineId,
                 flightCode,
+                100,
                 price,
+                departureTime,
+                arrivalTime,
+                departureDate,
+                arrivalDate,
             ]
         );
 

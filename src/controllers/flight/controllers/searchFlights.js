@@ -1,7 +1,10 @@
 import chalk from "chalk";
+import lodash from "lodash";
 
 import { addDays, combineDateTime, getTimeDiff } from "#modules/date";
 import { pool } from "#config/dbConfig";
+
+const { orderBy } = lodash;
 
 // API can find connecting flight up to 2 stops (3 flight) per route
 const STOPS_LIMIT_PER_ROUTES = 2;
@@ -193,6 +196,7 @@ export async function searchFlights(req, res) {
                             price,
                             departure: departureDateTime,
                             arrival: arrivalDateTime,
+                            stops: route.length,
                         };
                     });
                 }
@@ -200,9 +204,10 @@ export async function searchFlights(req, res) {
         );
 
         const filteredSearchResult = searchResult.flat().filter(Boolean);
+        const sortedSearchResult = orderBy(filteredSearchResult, ["duration", "stops", "price"]);
 
         console.log(chalk.magenta(`Search result is now sent. Please check the response data`));
-        res.status(200).json(filteredSearchResult);
+        res.status(200).json(sortedSearchResult);
     } catch (err) {
         console.log(chalk.red(`Error getting flights search result: ${err.message}`));
         res.status(500).json({ message: "Internal Server error" });
