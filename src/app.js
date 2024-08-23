@@ -10,6 +10,7 @@ import airportRoutes from "#routes/airportRoutes";
 import bookingRoutes from "#routes/bookingRoutes";
 import flightRoutes from "#routes/flightRoutes";
 import userRoutes from "#routes/userRoutes";
+import permissionRoute from "#routes/permissionRoutes";
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use(morgan("dev"));
 app.use("/api/airports", airportRoutes);
 app.use("/api/booking", bookingRoutes);
 app.use("/api/flights", flightRoutes);
+app.use("/api/permission", permissionRoute);
 app.use("/api/user", userRoutes);
 
 // Error handling middleware

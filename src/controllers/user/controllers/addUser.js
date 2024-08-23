@@ -6,7 +6,7 @@ import { pool } from "#config/dbConfig";
 
 // Add user (This function is created for making mock data only, No UI or requirement for this function)
 export async function addUser(req, res) {
-    const { username, password, email } = req.body;
+    const { username, password, email, role } = req.body;
 
     if (!username || !password || !email) {
         console.log(chalk.red("Username and password are required"));
@@ -30,10 +30,10 @@ export async function addUser(req, res) {
 
         // Insert user
         const insetUserQuery = `
-            INSERT INTO "Users"(id, "username", "password", "email")
-            VALUES ($1, $2, $3, $4)
+            INSERT INTO "Users"(id, "username", "password", "email", "role")
+            VALUES ($1, $2, $3, $4, $5)
         `;
-        await pool.query(insetUserQuery, [uuid(), username, hashedPassword, email]);
+        await pool.query(insetUserQuery, [uuid(), username, hashedPassword, email, role]);
 
         console.log(chalk.magenta(`User created successfully`));
         res.status(201).json({ message: "User created successfully" });
