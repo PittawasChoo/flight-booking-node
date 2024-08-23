@@ -4,6 +4,7 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import xss from "xss-clean";
+import sanitize from "sanitize";
 
 import airportRoutes from "#routes/airportRoutes";
 import bookingRoutes from "#routes/bookingRoutes";
@@ -18,6 +19,9 @@ app.use(express.json());
 // Security
 // Secure HTTP Header
 app.use(helmet());
+
+// Sanitize recieved request
+app.use(sanitize.middleware);
 
 // Data sanitization against site script xss
 app.use(xss());

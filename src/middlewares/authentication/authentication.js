@@ -1,3 +1,5 @@
+import chalk from "chalk";
+
 import { verifyToken } from "#utils/encryptions/jwtEncryptions";
 
 // Middleware function to authenticate JWT
@@ -6,12 +8,16 @@ const authenticateToken = (req, res, next) => {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1]; // Assuming "Bearer <token>"
 
-    if (token == null) return res.status(401).json({ message: "Token not provided" });
+    if (token == null) {
+        console.log(chalk.red("Token not provided"));
+        return res.status(401).json({ message: "Token not provided" });
+    }
 
     // Verify the token
     verifyToken(
         token,
         () => {
+            console.log(chalk.red("Invalid token"));
             return res.status(403).json({ message: "Invalid token" });
         },
         (user) => {

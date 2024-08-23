@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import { v4 as uuid } from "uuid";
 
 import { hashPassword } from "#utils/hashing/hashingPassword";

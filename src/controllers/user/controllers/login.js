@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import bcrypt from "bcrypt";
 
 import { generateToken } from "#utils/encryptions/jwtEncryptions";
